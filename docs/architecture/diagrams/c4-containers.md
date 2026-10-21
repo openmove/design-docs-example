@@ -1,6 +1,6 @@
 # C4 — Containers
 
-Deployable pieces inside CityCycle after ADRs 0001 and 0002. Battery telemetry storage from ADR 0003 is shown as a later addition.
+Deployable pieces inside CityCycle after the founding ADRs. The API is the Node.js process from ADR 0004. Battery telemetry storage from ADR 0003 is shown as a later addition.
 
 ```mermaid
 C4Container
@@ -12,7 +12,7 @@ C4Container
   System_Boundary(citycycle, "CityCycle") {
     Container(mobile, "Mobile app", "iOS / Android", "Rider unlock and map")
     Container(console, "Operator console", "Web", "Fill levels and trip lookup")
-    Container(api, "CityCycle API", "JVM service", "Domain logic and integrations")
+    Container(api, "CityCycle API", "Node.js, Fastify", "Domain logic and integrations")
     ContainerDb(pg, "PostgreSQL", "Managed SQL", "Trips, inventory, payments")
     ContainerDb(redis, "Redis", "Managed cache", "Availability snapshot and unlock locks")
     ContainerDb(telemetry, "Battery telemetry store", "Time-series (later)", "e-bike battery samples")
@@ -42,7 +42,7 @@ flowchart TB
   subgraph citycycle["CityCycle"]
     mobile["Mobile app"]
     console["Operator console"]
-    api["CityCycle API"]
+    api["CityCycle API<br/>Node.js, Fastify"]
     pg[("PostgreSQL")]
     redis[("Redis")]
     telemetry[("Battery telemetry<br/>after ADR 0003")]

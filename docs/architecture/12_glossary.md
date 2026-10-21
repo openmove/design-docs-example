@@ -8,3 +8,5 @@
 | Trip | One rental from unlock to return |
 | Fill level | Ratio of bikes present to slots at a station |
 | Availability snapshot | Cached free-bike and free-slot counts per station, held in Redis |
+| `citycycle_app` | PostgreSQL role used by the Fastify process. Can read and write rows, cannot change the schema |
+| `citycycle_migrator` | PostgreSQL role used by the CI migration job |

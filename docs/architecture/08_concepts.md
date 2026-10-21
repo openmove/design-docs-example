@@ -2,7 +2,13 @@
 
 ## Authentication and roles
 
-Riders, operators, and support use the same identity provider with different roles. The API enforces role checks on every mutating endpoint. Dock devices authenticate to MQTT with per-station credentials issued at install time.
+Riders, operators, and support use the same identity provider with different roles (`rider`, `operator`, `support`). A Fastify `onRequest` hook checks the token and rejects the call before the route handler. Dock devices authenticate to MQTT with per-station credentials issued at install time.
+
+## Database access
+
+PostgreSQL is on the private network, TLS only. The serving process uses the role `citycycle_app` and a small connection pool. Migrations run as `citycycle_migrator` from CI, before the new containers take traffic. See [ADR 0005](../adr/0005-postgresql-network-and-roles.md).
+
+Redis requires a password and TLS. It is not a place for trip history.
 
 ## Idempotency of unlock
 

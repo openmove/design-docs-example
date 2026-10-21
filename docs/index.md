@@ -26,7 +26,9 @@ There is no application code here. The documents are the point. This is what the
 4. [Container diagram](architecture/diagrams/c4-containers.md) and [building blocks](architecture/05_building_block_view.md) — the deployable pieces.
 5. The ADRs, in order:
    - [0000 — use MADR](adr/0000-use-markdown-architectural-decision-records.md)
+   - [0004 — Node.js and Fastify](adr/0004-nodejs-fastify-for-the-api.md)
    - [0001 — PostgreSQL for trips and inventory](adr/0001-postgresql-for-trips-and-inventory.md)
+   - [0005 — who can reach PostgreSQL](adr/0005-postgresql-network-and-roles.md)
    - [0002 — Redis for station availability](adr/0002-redis-for-station-availability.md)
 6. [RFC 0001 — add electric bikes](rfc/0001-add-electric-bikes.md) — a later change with real trade-offs.
 7. [ADR 0003](adr/0003-battery-telemetry-separate-from-trip-store.md) — the decision that RFC produced.
