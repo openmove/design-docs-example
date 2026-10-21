@@ -1,6 +1,8 @@
 # Design docs example — CityCycle
 
-A filled-in example of [design-docs-template](https://github.com/alessandroros/design-docs-template). The product is fictional. The documents are the point.
+A filled-in example of the [engineering design playbook](https://openmove.github.io/engineering-design-playbook/). The product is fictional. The documents are the point.
+
+Reading view: [openmove.github.io/design-docs-example](https://openmove.github.io/design-docs-example/).
 
 **CityCycle** is a bike-sharing service for a mid-size city. Riders unlock a bike from a station, ride, and return it. Operators restock stations. A later change adds electric bikes.
 
@@ -25,4 +27,4 @@ That sequence is the practice: map the system first, record durable choices as A
 
 - Not a product for Riverside, and not related to any real operator.
 - Not a complete arc42 fill-in. Sections that would be empty noise are left short on purpose.
-- Not a substitute for the template. New projects should start from [design-docs-template](https://github.com/alessandroros/design-docs-template), not from this example.
+- Not a substitute for the template. New projects should start from [engineering-design-playbook](https://github.com/openmove/engineering-design-playbook), not from this example.
