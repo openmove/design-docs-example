@@ -11,3 +11,5 @@ The three quality goals from [section 1](01_introduction_and_goals.md) drive a s
 | One team, one service | A single Node.js process on Fastify serves riders and operators and holds the adapters. | [0004](../adr/0004-nodejs-fastify-for-the-api.md) |
 
 **Structural idea.** One backend application owns the domain. A mobile app and an operator console are clients. Dock hardware and payments stay outside the boundary. We do not split unlock, billing, and inventory into separate deployable services in the first release; the team size does not justify that operational cost. The process is Node.js 22 and Fastify. PostgreSQL is in the same private network, and the serving process connects as `citycycle_app`.
+
+When electric bikes arrived, battery samples got a second database — TimescaleDB — so the trip ledger did not absorb a 10-second write loop. See [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md).

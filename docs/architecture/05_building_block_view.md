@@ -13,9 +13,10 @@ Contained Building Blocks
 |----------------|----------------|-----------------|
 | Mobile app | Rider unlock, map, trip history | HTTPS → API |
 | Operator console | Station fill view, alerts, trip lookup | HTTPS → API |
-| CityCycle API | One Node.js process on Fastify: unlock, return, billing, inventory | HTTPS JSON; MQTT to docks; Redis; PostgreSQL; payment provider |
+| CityCycle API | One Node.js process on Fastify: unlock, return, billing, inventory | HTTPS JSON; MQTT to docks; Redis; PostgreSQL; TimescaleDB; payment provider |
 | PostgreSQL | System of record for stations, bikes, trips, payments | Used only by the API |
 | Redis | Station availability snapshot and short-lived unlock locks | Used only by the API |
+| TimescaleDB | Battery sample history after [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md) | Used only by the API `telemetry` module |
 
 Important Interfaces  
 - `GET /stations?near=lat,lng` — map. Reads Redis.  
@@ -44,7 +45,7 @@ Quality: city-wide list under 2 s (reads Redis via the API).
 ### CityCycle API
 
 Purpose: all domain behavior, in one Node.js 22 process.  
-Interfaces: HTTPS for clients; MQTT for docks; Redis; PostgreSQL; payment provider.  
+Interfaces: HTTPS for clients; MQTT for docks; Redis; PostgreSQL; TimescaleDB; payment provider.  
 See [ADR 0004](../adr/0004-nodejs-fastify-for-the-api.md).  
 Directory: `services/api` (not present in this docs-only example).  
 Risks: a single deployable unit means a bad release affects unlock and billing together. Mitigated by a small surface and a fast rollback.
@@ -64,6 +65,13 @@ Purpose: availability counts and unlock locks.
 See [ADR 0002](../adr/0002-redis-for-station-availability.md).  
 Risk: if Redis is down, unlock falls back to PostgreSQL with higher latency; the map may show a degraded banner.
 
+### TimescaleDB
+
+Purpose: e-bike battery sample history. A second managed instance, not an extension on the trip cluster.  
+See [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md).  
+Table: `battery_samples` (hypertable on `observed_at`), 90-day retention, compression after 7 days. Role `citycycle_telemetry` can insert and select, nothing else.  
+Risk: if Timescale is down, unlock still works from `bikes.battery_percent`; operator drain charts degrade.
+
 ## Level 2
 
 Inside the one Fastify process, five modules. They are folders, not deployable units.
@@ -76,4 +84,4 @@ Inside the one Fastify process, five modules. They are folders, not deployable u
 | `docks` | MQTT commands and events | Dock broker |
 | `billing` | Capture and refund after return | Payment provider, PostgreSQL |
 
-Battery samples from [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md) get a sixth module, `telemetry`, which writes the time-series store and updates `bikes.battery_percent`. It does not write a row per sample into `trips`.
+Battery samples from [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md) get a sixth module, `telemetry`. It `INSERT`s into Timescale `battery_samples` and `UPDATE`s `bikes.battery_percent` on PostgreSQL. It does not write a row per sample into `trips`. Operator drain charts use `GET /operator/bikes/{id}/battery`. Unlock does not.

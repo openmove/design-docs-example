@@ -15,7 +15,7 @@ C4Container
     Container(api, "CityCycle API", "Node.js, Fastify", "Domain logic and integrations")
     ContainerDb(pg, "PostgreSQL", "Managed SQL", "Trips, inventory, payments")
     ContainerDb(redis, "Redis", "Managed cache", "Availability snapshot and unlock locks")
-    ContainerDb(telemetry, "Battery telemetry store", "Time-series (later)", "e-bike battery samples")
+    ContainerDb(telemetry, "TimescaleDB", "Managed, second instance", "e-bike battery samples")
   }
 
   System_Ext(docks, "Dock network")
@@ -28,7 +28,7 @@ C4Container
   Rel(console, api, "HTTPS / JSON")
   Rel(api, pg, "Reads and writes")
   Rel(api, redis, "Reads and writes")
-  Rel(api, telemetry, "Writes samples", "after ADR 0003")
+  Rel(api, telemetry, "INSERT battery_samples", "after ADR 0003")
   Rel(api, docks, "MQTT")
   Rel(api, payments, "HTTPS")
   Rel(api, idp, "OIDC")
@@ -45,7 +45,7 @@ flowchart TB
     api["CityCycle API<br/>Node.js, Fastify"]
     pg[("PostgreSQL")]
     redis[("Redis")]
-    telemetry[("Battery telemetry<br/>after ADR 0003")]
+    telemetry[("TimescaleDB<br/>battery_samples")]
   end
 
   docks["Dock network"]

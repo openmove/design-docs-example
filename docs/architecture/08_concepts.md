@@ -10,6 +10,8 @@ PostgreSQL is on the private network, TLS only. The serving process uses the rol
 
 Redis requires a password and TLS. It is not a place for trip history.
 
+TimescaleDB is a second instance for battery samples only. Unlock does not read it. See [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md).
+
 ## Idempotency of unlock
 
 `POST /trips/unlock` accepts an `Idempotency-Key` from the app. Retries after a flaky mobile network must not create a second trip or a second MQTT unlock for the same key within the lock TTL.

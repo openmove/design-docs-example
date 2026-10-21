@@ -43,7 +43,7 @@ Cases this design must handle:
 
 **Domain.** `Bike` gains `type` (`mechanical` | `electric`) and, for e-bikes, `battery_percent` (0–100) and `battery_updated_at`. Unlock checks `battery_percent >= 15` for electric bikes. Pricing reads type when the trip closes.
 
-**Telemetry.** Dock firmware (or a bike gateway) publishes battery samples on MQTT. The API updates the latest `battery_percent` on the bike record for map/unlock, and appends samples to a **separate telemetry store**. Trip and payment rows stay in PostgreSQL without per-sample writes. That split is the durable decision in [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md).
+**Telemetry.** Dock firmware (or a bike gateway) publishes battery samples on MQTT `bike/{id}/battery`. The API updates `bikes.battery_percent` for map/unlock, and `INSERT`s the sample into a **second TimescaleDB instance**. Trip and payment rows stay in PostgreSQL without per-sample writes. Product and wiring are the durable decision in [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md).
 
 **API additions.**
 
@@ -65,14 +65,14 @@ Cases this design must handle:
 ## Drawbacks and risks
 
 - Security and privacy: battery traces are not personal data by themselves; still retain samples 90 days only.
-- Performance and scale: 200 bikes × sample every 10 s while awake is manageable in a time-series store; keep it off the trip primary.
+- Performance and scale: 200 bikes × sample every 10 s while awake is a Timescale hypertable problem; keep it off the trip primary.
 - Operability: new MQTT topic and a second data store to monitor.
 - Compatibility: older app versions ignore unknown fields; force-update only if we need the battery UI before launch.
 
 ## Rollout
 
 1. Deploy API with flag off; migrate `bike.type` default `mechanical`.
-2. Stand up telemetry store; consume battery topic in staging with a hardware bench.
+2. Stand up the Timescale instance and `battery_samples` hypertable; consume `bike/{id}/battery` in staging with a hardware bench.
 3. Enable flag for one station; verify unlock refusal under 15% and operator filter.
 4. Expand station by station; watch unlock p95 and PostgreSQL write rate (must stay flat).
 
@@ -80,5 +80,5 @@ Rollback: disable `ebikes_enabled`. E-bikes become non-unlockable; mechanical fl
 
 ## Unresolved questions
 
-* ~~Exact telemetry store product~~ → decided in ADR 0003 (managed time-series).
+* ~~Exact telemetry store product~~ → [ADR 0003](../adr/0003-battery-telemetry-separate-from-trip-store.md): managed TimescaleDB, second instance.
 * Minimum battery threshold 15% vs 20%: product to confirm with the city before launch (default 15% in this RFC).

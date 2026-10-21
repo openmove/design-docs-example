@@ -65,8 +65,8 @@ The city adds 200 electric bikes. The solution is not obvious: battery samples e
 The work goes through the chain:
 
 1. [RFC 0001](rfc/0001-add-electric-bikes.md) — `Implemented`. Alternatives, rollout, a flag.
-2. [ADR 0003](adr/0003-battery-telemetry-separate-from-trip-store.md) — `accepted`. Samples go to a time-series store. The latest percent stays on the bike row for unlock.
-3. The [container diagram](architecture/diagrams/c4-containers.md) gains the telemetry store. [Section 5](architecture/05_building_block_view.md) names a `telemetry` module. The RFC is not the map.
+2. [ADR 0003](adr/0003-battery-telemetry-separate-from-trip-store.md) — `accepted`. Samples go to a second TimescaleDB instance (`battery_samples` hypertable). The latest percent stays on `bikes` for unlock.
+3. The [container diagram](architecture/diagrams/c4-containers.md) gains TimescaleDB. [Section 5](architecture/05_building_block_view.md) names a `telemetry` module. The RFC is not the map.
 
 **Advantage.** The debate is over, and it is still readable. The map matches production. Nobody has to reconstruct June from Slack.
 
