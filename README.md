@@ -2,7 +2,7 @@
 
 A filled-in example of the [engineering design playbook](https://openmove.github.io/engineering-design-playbook/). The product is fictional. The documents are the point.
 
-Reading view: [openmove.github.io/design-docs-example](https://openmove.github.io/design-docs-example/).
+Reading view: [openmove.github.io/design-docs-example](https://openmove.github.io/design-docs-example/). Start with the [tour](https://openmove.github.io/design-docs-example/tour/).
 
 **CityCycle** is a bike-sharing service for a mid-size city. Riders unlock a bike from a station, ride, and return it. Operators restock stations. A later change adds electric bikes.
 

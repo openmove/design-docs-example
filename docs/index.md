@@ -3,10 +3,10 @@ title: CityCycle
 description: A worked example of the design docs method, on a fictional bike-sharing service.
 template: splash
 hero:
-  tagline: From the first architecture decisions to a later change, on a system small enough to read in one sitting.
+  tagline: A small fictional product used to show RFC, ADR, and arc42 — and what you lose if you skip them.
   actions:
-    - text: Start with the goals
-      link: architecture/01_introduction_and_goals/
+    - text: Take the tour
+      link: tour/
       icon: right-arrow
     - text: Back to the template
       link: https://openmove.github.io/engineering-design-playbook/
@@ -16,7 +16,7 @@ hero:
 
 CityCycle is a fictional docked bike-sharing service for the city of Riverside. Riders unlock a bike, ride, and return it. Operators restock stations. Months later, the city adds electric bikes.
 
-There is no application code here. The documents are the point. This is what the [template](https://github.com/openmove/engineering-design-playbook) looks like once a project has used it. New projects should start from the template, which is empty.
+There is no application code here. The documents are the point. Start with the [tour](tour.md): it walks the same files in the order they were written, and names the advantage of each one. New projects should start from the empty [template](https://github.com/openmove/engineering-design-playbook), not from this repository.
 
 ## Read in this order
 

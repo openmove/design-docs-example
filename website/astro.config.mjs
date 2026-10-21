@@ -14,6 +14,7 @@ export default defineConfig({
       social: [{ icon: 'github', label: 'GitHub', href: repoUrl }],
       lastUpdated: false,
       sidebar: [
+        { label: 'How this example works', slug: 'tour' },
         {
           label: 'Architecture (arc42)',
           items: [

@@ -1,6 +1,6 @@
 # Architecture — CityCycle
 
-Filled [arc42](https://arc42.org/overview/) sections for the CityCycle example. Start from the repository [README](../../README.md) for the reading order.
+Filled [arc42](https://arc42.org/overview/) sections for the CityCycle example. If you are new to the method, start with the [tour](../tour.md).
 
 | File | What to notice in this example |
 |------|--------------------------------|
