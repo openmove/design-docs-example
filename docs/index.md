@@ -32,5 +32,6 @@ There is no application code here. The documents are the point. This is what the
    - [0002 — Redis for station availability](adr/0002-redis-for-station-availability.md)
 6. [RFC 0001 — add electric bikes](rfc/0001-add-electric-bikes.md) — a later change with real trade-offs.
 7. [ADR 0003](adr/0003-battery-telemetry-separate-from-trip-store.md) — the decision that RFC produced.
+8. [RFC 0002 — hold a bike while walking to it](rfc/0002-hold-a-bike-before-unlock.md) — the next change, still in review. [ADR 0006](adr/0006-short-hold-in-redis.md) is only proposed, and the runtime view has not been rewritten.
 
-That sequence is the practice: map the system first, record durable choices as ADRs, propose ambiguous work as an RFC, and let an approved RFC leave new ADRs behind.
+That sequence is the practice: map the system first, record durable choices as ADRs, propose ambiguous work as an RFC, and let an approved RFC leave new ADRs behind. Step 8 is what the docs look like in the middle of a change.

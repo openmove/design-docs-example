@@ -2,6 +2,8 @@
 
 ## Unlock a bike
 
+This is the system as it runs today. A hold that starts when the rider taps the bike, before this sequence, is under review in [RFC 0002](../rfc/0002-hold-a-bike-before-unlock.md). It is not part of this scenario until [ADR 0006](../adr/0006-short-hold-in-redis.md) is accepted.
+
 ```mermaid
 sequenceDiagram
   actor Rider
