@@ -35,6 +35,10 @@ C4Container
 ```
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 flowchart TB
   rider["Rider"]
   staff["Operator / support"]

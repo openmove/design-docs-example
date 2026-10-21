@@ -7,7 +7,16 @@ export default defineConfig({
   site,
   base,
   integrations: [
-    mermaid({ autoTheme: true }),
+    mermaid({
+      autoTheme: true,
+      mermaidConfig: {
+        layout: 'elk',
+        elk: {
+          mergeEdges: true,
+          nodePlacementStrategy: 'LINEAR_SEGMENTS',
+        },
+      },
+    }),
     starlight({
       title: 'CityCycle',
       description: 'A worked example of RFC, ADR, and arc42 on a fictional bike-sharing service.',

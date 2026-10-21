@@ -27,6 +27,10 @@ C4Context
 ```
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 flowchart TB
   rider["Rider"]
   operator["Fleet operator"]

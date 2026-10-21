@@ -3,6 +3,10 @@
 ## Infrastructure Level 1
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 flowchart LR
   riders["Riders / operators"] --> edge["CDN + WAF"]
   edge --> app["App platform<br/>API + consoles"]
